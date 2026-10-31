@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#080a16" />
+    <meta
+      name="description"
+      content="Aetheria is an interactive 3D world of floating isles, sleeping light shards, and drifting skies."
+    />
+    <title>Aetheria — Floating Isles</title>
+    <link rel="preload" href="./vendor/fonts/sora-latin.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="./vendor/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="stylesheet" href="./styles.css" />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop stop-color='%237fe9ff'/%3E%3Cstop offset='1' stop-color='%23ff9ec7'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='16' fill='%23090b18'/%3E%3Cpath d='M32 10 50 32 32 54 14 32Z' fill='url(%23g)'/%3E%3C/svg%3E"
+    />
+  </head>
+  <body>
+    <canvas id="scene" aria-label="Aetheria, an interactive three-dimensional floating island world"></canvas>
+
+    <div class="ui">
+      <header class="brand">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <span class="brand-text">
+          <span class="brand-name">Aetheria</span>
+          <span class="brand-sub">Floating Isles</span>
+        </span>
+      </header>
+
+      <section class="shards-panel" aria-label="Light shard progress">
+        <span class="panel-label">Light shards</span>
+        <span class="shard-dots" aria-hidden="true">
+          <i class="shard-dot"></i>
+          <i class="shard-dot"></i>
+          <i class="shard-dot"></i>
+          <i class="shard-dot"></i>
+          <i class="shard-dot"></i>
+        </span>
+        <span id="shard-count" class="shard-count">0 / 5</span>
+      </section>
+
+      <p class="hint">Drag to orbit <span>·</span> Scroll to zoom <span>·</span> Click the shards</p>
+
+      <div class="dock">
+        <div class="themes" role="group" aria-label="Time of day">
+          <button type="button" data-theme="dawn">Dawn</button>
+          <button type="button" data-theme="day">Day</button>
+          <button type="button" data-theme="dusk" class="active">Dusk</button>
+          <button type="button" data-theme="night">Night</button>
+        </div>
+        <button type="button" id="reset-view" class="ghost">Reset view</button>
+      </div>
+
+      <div id="toast" class="toast" role="status" aria-live="polite"></div>
+      <div class="grain" aria-hidden="true"></div>
+    </div>
+
+    <div id="intro" class="intro">
+      <div class="intro-card">
+        <p class="eyebrow"><span class="eyebrow-mark" aria-hidden="true"></span> An interactive 3D world</p>
+        <h1>Aetheria</h1>
+        <p class="lede">
+          Five light shards sleep among the floating isles. Wake them all, and watch the sky answer.
+        </p>
+        <button type="button" id="play" class="play">
+          <span>Play</span>
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M5 12h13M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </button>
+        <p class="intro-controls">Drag to orbit <span>·</span> Scroll to zoom <span>·</span> Tap a shard</p>
+      </div>
+    </div>
+
+    <noscript>
+      <div class="fallback">Aetheria needs JavaScript and WebGL to render its floating world.</div>
+    </noscript>
+
+    <script>
+      // Let the first click hide the curtain immediately, even before the 3D module finishes loading.
+      (function () {
+        var play = document.getElementById('play')
+        play.addEventListener('click', function () {
+          window.__aetheriaStartRequested = true
+          document.body.classList.add('started')
+          var intro = document.getElementById('intro')
+          intro.classList.add('hidden')
+          intro.setAttribute('aria-hidden', 'true')
+        })
+      })()
+    </script>
+
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "./vendor/three/three.module.js",
+          "three/addons/": "./vendor/three/addons/"
+        }
+      }
+    </script>
+    <script type="module" src="./src/main.js"></script>
+  </body>
+</html>
