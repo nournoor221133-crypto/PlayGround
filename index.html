@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<meta name="theme-color" content="#070a12">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<title>Hollow Chamber — A Descent in Three Blades</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body data-mode="title">
+
+<svg class="svg-defs" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+  <symbol id="icon-sword" viewBox="0 0 64 64">
+    <path d="M32 3l7.5 13.5-2 21.5-5.5 8.5-5.5-8.5-2-21.5z" fill="currentColor"/>
+    <path d="M15 40.5h34v5H15z" fill="currentColor" opacity=".85"/>
+    <path d="M29.4 46h5.2v10.6h-5.2z" fill="currentColor" opacity=".7"/>
+    <circle cx="32" cy="59.5" r="3.2" fill="currentColor"/>
+  </symbol>
+  <symbol id="icon-spear" viewBox="0 0 64 64">
+    <path d="M12 55L49 14" stroke="currentColor" stroke-width="3.6" stroke-linecap="round"/>
+    <path d="M49 5l9 10-14 4 5-14z" fill="currentColor"/>
+    <path d="M47 14c2 7 6 10 12 11" stroke="currentColor" stroke-width="2" fill="none" opacity=".65"/>
+    <path d="M8 58l8-2-5-6z" fill="currentColor" opacity=".8"/>
+  </symbol>
+  <symbol id="icon-bow" viewBox="0 0 64 64">
+    <path d="M14 7c23 9 23 41 0 50" stroke="currentColor" stroke-width="3.6" fill="none" stroke-linecap="round"/>
+    <path d="M14 7v50" stroke="currentColor" stroke-width="1.4" opacity=".55"/>
+    <path d="M18 32h34" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/>
+    <path d="M54 32l-10-5.4v10.8z" fill="currentColor"/>
+    <path d="M20 32l6-3.4v6.8z" fill="currentColor" opacity=".7"/>
+  </symbol>
+  <symbol id="icon-heart" viewBox="0 0 64 64">
+    <path d="M32 55S8 42 8 25.5C8 16.4 14.8 10 23.2 10c4.8 0 8.2 2.4 8.8 4.2C32.6 12.4 36 10 40.8 10 49.2 10 56 16.4 56 25.5 56 42 32 55 32 55z" fill="currentColor"/>
+  </symbol>
+  <symbol id="icon-soul" viewBox="0 0 64 64">
+    <path d="M32 5l18 27-18 27L14 32z" fill="currentColor"/>
+    <path d="M32 15l10 17-10 17-10-17z" fill="#fff" opacity=".2"/>
+  </symbol>
+  <symbol id="icon-skull" viewBox="0 0 64 64">
+    <path d="M32 6C18 6 10 16 10 28c0 8 4 13 9 16v8c0 3 2 5 5 5h16c3 0 5-2 5-5v-8c5-3 9-8 9-16C54 16 46 6 32 6z" fill="currentColor"/>
+    <circle cx="24" cy="29" r="5" fill="#0b101a"/><circle cx="40" cy="29" r="5" fill="#0b101a"/>
+    <path d="M29 38h6l-1 6h-4z" fill="#0b101a"/>
+    <path d="M22 50h6v7h-6zM36 50h6v7h-6z" fill="currentColor" opacity=".5"/>
+  </symbol>
+  <symbol id="icon-dash" viewBox="0 0 64 64">
+    <path d="M8 14l20 18-20 18zM34 14l20 18-20 18z" fill="currentColor"/>
+  </symbol>
+  <symbol id="icon-star" viewBox="0 0 64 64">
+    <path d="M32 4l7.7 20L61 31l-21.3 7L32 59l-7.7-21L3 31l21.3-7z" fill="currentColor"/>
+  </symbol>
+  <symbol id="icon-shield" viewBox="0 0 64 64">
+    <path d="M32 5l22 7v20c0 13-9 22-22 27C19 54 10 45 10 32V12z" fill="currentColor"/>
+    <path d="M32 12l15 5v15c0 9-6 16-15 20-9-4-15-11-15-20V17z" fill="#0b101a" opacity=".35"/>
+  </symbol>
+  <symbol id="icon-bolt" viewBox="0 0 64 64">
+    <path d="M36 3L10 36h17l-4 25 27-35H33z" fill="currentColor"/>
+  </symbol>
+  <symbol id="icon-wing" viewBox="0 0 64 64">
+    <path d="M6 46C18 22 38 10 58 8c-2 20-13 37-35 44l-4-12-13 6z" fill="currentColor"/>
+    <path d="M20 42c10-12 22-20 32-27" stroke="#0b101a" stroke-width="2.4" opacity=".4" fill="none"/>
+  </symbol>
+  <symbol id="icon-eye" viewBox="0 0 64 64">
+    <path d="M32 13C17 13 6 25 3 32c3 7 14 19 29 19s26-12 29-19c-3-7-14-19-29-19z" fill="currentColor"/>
+    <circle cx="32" cy="32" r="11" fill="#0b101a"/><circle cx="32" cy="32" r="5" fill="currentColor"/>
+  </symbol>
+  <symbol id="icon-drop" viewBox="0 0 64 64">
+    <path d="M32 4C22 20 12 30 12 41c0 11 9 19 20 19s20-8 20-19C52 30 42 20 32 4z" fill="currentColor"/>
+    <path d="M24 40c0 6 3 10 8 12" stroke="#fff" stroke-width="3" opacity=".25" fill="none" stroke-linecap="round"/>
+  </symbol>
+  <symbol id="icon-sound" viewBox="0 0 64 64">
+    <path d="M8 24h11L34 12v40L19 40H8z" fill="currentColor"/>
+    <path d="M42 22c5 5 5 15 0 20M49 15c9 9 9 25 0 34" stroke="currentColor" stroke-width="4" fill="none" stroke-linecap="round"/>
+  </symbol>
+  <symbol id="icon-mute" viewBox="0 0 64 64">
+    <path d="M8 24h11L34 12v40L19 40H8z" fill="currentColor"/>
+    <path d="M43 24l14 16M57 24L43 40" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
+  </symbol>
+  <symbol id="icon-pause" viewBox="0 0 64 64">
+    <path d="M16 10h11v44H16zM37 10h11v44H37z" fill="currentColor"/>
+  </symbol>
+</svg>
+
+<canvas id="game" aria-label="Hollow Chamber combat arena"></canvas>
+<div class="vignette" aria-hidden="true"></div>
+<div id="flash" aria-hidden="true"></div>
+
+<div id="hud" class="hidden" aria-hidden="true">
+  <div class="hud-top">
+    <div class="hp-block">
+      <div class="hp-label"><span>VITALITY</span><span id="hp-text">100 / 100</span></div>
+      <div class="hp-frame"><div id="hp-chip" class="hp-chip"></div><div id="hp-fill" class="hp-fill"></div><div class="hp-gloss"></div></div>
+      <div id="boon-row" class="boon-row"></div>
+    </div>
+
+    <div class="chamber-block">
+      <div id="chamber-label" class="chamber-label">CHAMBER I</div>
+      <div class="wave-pips" id="wave-pips"><i></i><i></i><i></i></div>
+      <div id="foe-count" class="foe-count">FOES REMAIN — 0</div>
+    </div>
+
+    <div class="hud-right">
+      <div class="stat-line"><svg class="stat-icon soul"><use href="#icon-soul"/></svg><span id="soul-count">0</span></div>
+      <div class="stat-line"><svg class="stat-icon"><use href="#icon-skull"/></svg><span id="kill-count">0</span></div>
+      <div class="hud-buttons">
+        <button id="mute-btn" class="icon-btn" aria-label="Toggle sound"><svg><use href="#icon-sound"/></svg></button>
+        <button id="pause-btn" class="icon-btn" aria-label="Pause"><svg><use href="#icon-pause"/></svg></button>
+      </div>
+    </div>
+  </div>
+
+  <div class="hud-bottom">
+    <div class="weapon-panel">
+      <div class="weapon-sigil" id="hud-weapon-icon"><svg><use href="#icon-sword"/></svg></div>
+      <div class="weapon-meta">
+        <span class="micro">YOUR ARMS</span>
+        <strong id="hud-weapon-name">Stygian Blade</strong>
+        <span id="hud-weapon-perk" class="weapon-perk">Three-hit combo · whirlwind</span>
+      </div>
+    </div>
+
+    <div class="ability-bar">
+      <div class="ability" id="ab-attack">
+        <span class="ability-key">LMB</span>
+        <span class="ability-name">ATTACK</span>
+        <span class="ability-cd"></span>
+      </div>
+      <div class="ability" id="ab-special">
+        <span class="ability-key">RMB</span>
+        <span class="ability-name">SPECIAL</span>
+        <span class="ability-cd"></span>
+      </div>
+      <div class="ability" id="ab-dash">
+        <span class="ability-key">SPACE</span>
+        <span class="ability-name">DASH</span>
+        <span class="ability-cd"></span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="banner" aria-live="polite"><span id="banner-kicker"></span><h2 id="banner-title"></h2><p id="banner-sub"></p></div>
+<div id="toast" role="status"></div>
+
+<div id="title-screen" class="screen">
+  <div class="title-wrap">
+    <header class="title-hero">
+      <div class="eyebrow"><span></span>A DESCENT IN THREE BLADES<span></span></div>
+      <h1>HOLLOW <em>CHAMBER</em></h1>
+      <p class="tagline">The dead do not stop. Neither do you.</p>
+    </header>
+
+    <section class="loadout" aria-labelledby="loadout-title">
+      <div class="section-label" id="loadout-title"><span></span>CHOOSE YOUR WEAPON<span></span></div>
+      <div class="weapon-grid">
+        <button class="weapon-card selected" data-weapon="blade" style="--wc:#e2505a" aria-pressed="true">
+          <span class="w-head">
+            <span class="w-icon"><svg><use href="#icon-sword"/></svg></span>
+            <span class="w-titles"><span class="w-role">CLOSE · CRUEL · CONSECUTIVE</span><span class="w-name">Stygian Blade</span></span>
+            <span class="w-key">1</span>
+          </span>
+          <span class="w-perk">A three-hit combo. The third strike carves wider and hits harder.</span>
+          <span class="w-special">SPECIAL — <b>Whirlwind</b> · spin through everything nearby</span>
+          <span class="w-stats">
+            <span class="stat"><i>POWER</i><b style="--v:64%"></b></span>
+            <span class="stat"><i>SPEED</i><b style="--v:86%"></b></span>
+            <span class="stat"><i>REACH</i><b style="--v:32%"></b></span>
+          </span>
+        </button>
+
+        <button class="weapon-card" data-weapon="spear" style="--wc:#62e3cd" aria-pressed="false">
+          <span class="w-head">
+            <span class="w-icon"><svg><use href="#icon-spear"/></svg></span>
+            <span class="w-titles"><span class="w-role">LONG · PIERCING · PATIENT</span><span class="w-name">Aetos Spear</span></span>
+            <span class="w-key">2</span>
+          </span>
+          <span class="w-perk">A long thrust that skewers a line of foes. Keep them at the point.</span>
+          <span class="w-special">SPECIAL — <b>Eagle's Flight</b> · throw and recall the spear</span>
+          <span class="w-stats">
+            <span class="stat"><i>POWER</i><b style="--v:82%"></b></span>
+            <span class="stat"><i>SPEED</i><b style="--v:44%"></b></span>
+            <span class="stat"><i>REACH</i><b style="--v:100%"></b></span>
+          </span>
+        </button>
+
+        <button class="weapon-card" data-weapon="bow" style="--wc:#f0c674" aria-pressed="false">
+          <span class="w-head">
+            <span class="w-icon"><svg><use href="#icon-bow"/></svg></span>
+            <span class="w-titles"><span class="w-role">SWIFT · DISTANT · UNFORGIVING</span><span class="w-name">Heart-Seeker Bow</span></span>
+            <span class="w-key">3</span>
+          </span>
+          <span class="w-perk">Rapid arrows that punish from afar. Distance is a kind of armor.</span>
+          <span class="w-special">SPECIAL — <b>Five Fates</b> · loose a fan of five arrows</span>
+          <span class="w-stats">
+            <span class="stat"><i>POWER</i><b style="--v:58%"></b></span>
+            <span class="stat"><i>SPEED</i><b style="--v:74%"></b></span>
+            <span class="stat"><i>REACH</i><b style="--v:96%"></b></span>
+          </span>
+        </button>
+      </div>
+    </section>
+
+    <div class="title-actions">
+      <button id="start-btn" class="play-btn" aria-label="Play">Play</button>
+      <div class="controls-hint">
+        <span><kbd>WASD</kbd> move</span><span><kbd>MOUSE</kbd> aim</span><span><kbd>LMB</kbd> attack</span><span><kbd>RMB</kbd> special</span><span><kbd>SPACE</kbd> dash</span>
+      </div>
+    </div>
+    <p class="title-foot">Three chambers. No gods. One way out.</p>
+  </div>
+</div>
+
+<div id="reward-screen" class="screen hidden">
+  <div class="reward-wrap">
+    <div class="eyebrow"><span></span>THE CHAMBER YIELDS<span></span></div>
+    <h2 class="overlay-title">CHOOSE A <em>BOON</em></h2>
+    <p class="overlay-sub">Power is never given freely.</p>
+    <div id="boon-grid" class="boon-grid"></div>
+    <p class="reward-hint">Press <kbd>1</kbd> <kbd>2</kbd> or <kbd>3</kbd></p>
+  </div>
+</div>
+
+<div id="pause-screen" class="screen hidden">
+  <div class="pause-wrap">
+    <div class="eyebrow"><span></span>THE UNDERWORLD WAITS<span></span></div>
+    <h2 class="overlay-title">PAUSED</h2>
+    <p class="overlay-sub" id="pause-sub">Chamber I · Wave I</p>
+    <div class="pause-actions">
+      <button id="resume-btn" class="play-btn small">Resume</button>
+      <button id="abandon-btn" class="ghost-btn">Abandon Run</button>
+    </div>
+  </div>
+</div>
+
+<div id="end-screen" class="screen hidden">
+  <div class="end-wrap">
+    <div id="end-kicker" class="eyebrow"><span></span>THE DESCENT ENDS<span></span></div>
+    <h2 id="end-title" class="overlay-title">YOU DIED</h2>
+    <p id="end-sub" class="overlay-sub">The Styx remembers your name.</p>
+    <div class="end-stats">
+      <div><span id="end-chamber">I</span><i>CHAMBER</i></div>
+      <div><span id="end-kills">0</span><i>FOES SLAIN</i></div>
+      <div><span id="end-souls">0</span><i>SOULS</i></div>
+      <div><span id="end-time">0:00</span><i>TIME</i></div>
+    </div>
+    <button id="retry-btn" class="play-btn">Descend Again</button>
+    <p class="title-foot">Death is not the end. It is the arrangement.</p>
+  </div>
+</div>
+
+<div id="touch-controls" aria-hidden="true">
+  <div id="joystick" class="joystick" role="presentation">
+    <span class="joystick-ring"></span>
+    <span id="stick-knob" class="stick-knob"></span>
+  </div>
+  <div class="touch-buttons">
+    <button id="touch-special" class="tbtn special" aria-label="Special attack"><svg><use href="#icon-star"/></svg><span>SPECIAL</span></button>
+    <button id="touch-dash" class="tbtn dash" aria-label="Dash"><svg><use href="#icon-dash"/></svg><span>DASH</span></button>
+    <button id="touch-attack" class="tbtn attack" aria-label="Attack"><svg><use href="#icon-sword"/></svg><span>ATTACK</span></button>
+  </div>
+</div>
+
+<script src="game.js"></script>
+</body>
+</html>
