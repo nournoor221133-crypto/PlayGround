@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
+<meta name="theme-color" content="#0a0c14" />
+<meta name="description" content="MADOUT 2 — Big City Life. A fan-made open-world driving action game for the browser." />
+<title>MADOUT 2 — Big City Life</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%230b0d17'/%3E%3Cpath d='M10 46V18h9l13 17 13-17h9v28h-9V32L32 48 19 32v14z' fill='%23ff7a1a'/%3E%3C/svg%3E" />
+<link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+<div id="game">
+  <canvas id="scene" aria-label="MADOUT 2 game view"></canvas>
+  <div id="grade"></div>
+  <div id="nitroTint"></div>
+  <div id="damageFlash"></div>
+
+  <!-- ================= HUD ================= -->
+  <div id="hud" class="hidden">
+    <div id="topLeft">
+      <div class="brand-mini">MADOUT<span>2</span></div>
+      <div id="wanted" aria-label="Wanted level"></div>
+      <div class="stat">
+        <span class="stat-ico">&#10084;</span>
+        <div class="bar"><i id="healthBar"></i></div>
+      </div>
+      <div class="stat">
+        <span class="stat-ico n2o">N<sub>2</sub>O</span>
+        <div class="bar"><i id="nitroBar"></i></div>
+      </div>
+    </div>
+
+    <div id="missionPanel" class="panel">
+      <div id="missionName">WARM UP</div>
+      <div id="missionObjective">Reach the checkpoint</div>
+      <div class="mission-meta">
+        <span id="missionDist">0 m</span>
+        <span id="missionTimer">0:00</span>
+      </div>
+      <div class="bar slim"><i id="missionBar"></i></div>
+    </div>
+
+    <div id="topRight">
+      <div id="cashBox"><span class="cash-sign">$</span><span id="cash">0</span></div>
+      <canvas id="minimap" width="340" height="340"></canvas>
+      <div id="compass"><span id="compassArrow">&#10148;</span></div>
+    </div>
+
+    <div id="speedo">
+      <svg viewBox="0 0 200 200" aria-hidden="true">
+        <circle class="gauge-ticks" cx="100" cy="100" r="88"></circle>
+        <circle class="gauge-track" cx="100" cy="100" r="76"></circle>
+        <circle id="gaugeFill" class="gauge-fill" cx="100" cy="100" r="76"></circle>
+      </svg>
+      <div class="speed-inner">
+        <div id="speedVal">0</div>
+        <div class="speed-unit">KM/H</div>
+        <div id="gear">D</div>
+      </div>
+    </div>
+
+    <div id="modeHint" class="hidden">E &middot; ENTER VEHICLE</div>
+
+    <div id="touch">
+      <div id="steerPad">
+        <button class="tbtn steer" data-act="left" aria-label="Steer left">&#9664;</button>
+        <button class="tbtn steer" data-act="right" aria-label="Steer right">&#9654;</button>
+      </div>
+      <div id="sideBtns">
+        <button class="tbtn small" data-act="nitro">N<sub>2</sub>O</button>
+        <button class="tbtn small" data-act="hand">DRIFT</button>
+        <button class="tbtn small accent hidden" data-act="action" id="actionBtn">ENTER</button>
+      </div>
+      <div id="pedals">
+        <button class="tbtn pedal gas" data-act="gas" aria-label="Accelerate">&#9650;</button>
+        <button class="tbtn pedal brake" data-act="brake" aria-label="Brake and reverse">&#9660;</button>
+      </div>
+    </div>
+
+    <button id="pauseBtn" aria-label="Pause">&#10074;&#10074;</button>
+    <div id="keyHints">
+      <span><b>WASD</b> drive</span><span><b>SPACE</b> drift</span><span><b>SHIFT</b> nitro</span><span><b>E</b> get in / out</span>
+    </div>
+  </div>
+
+  <!-- ================= START ================= -->
+  <div id="start" class="screen">
+    <div class="start-glow"></div>
+    <div class="start-inner">
+      <div class="eyebrow">BIG CITY LIFE &middot; OPEN WORLD</div>
+      <h1 class="logo">MADOUT<span class="logo-two">2</span></h1>
+      <div class="tagline">OWN THE STREETS. OUTRUN THE HEAT.</div>
+      <p class="blurb">Steal a ride, chain the jobs, and keep five stars of trouble on your tail. The city is yours — for as long as you can keep it.</p>
+      <div class="feature-row">
+        <div><b>36</b><span>CITY BLOCKS</span></div>
+        <div><b>5&#9733;</b><span>POLICE HEAT</span></div>
+        <div><b>&infin;</b><span>ENDLESS JOBS</span></div>
+      </div>
+      <button id="startBtn" class="cta">TAP TO DRIVE</button>
+      <div class="start-foot">
+        <span>Best score <b id="bestScore">$0</b></span>
+        <span class="dot"></span>
+        <span>Sound on for the full experience</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= PAUSE ================= -->
+  <div id="pause" class="screen hidden">
+    <div class="modal panel">
+      <div class="eyebrow">TAKE A BREATHER</div>
+      <h2>PAUSED</h2>
+      <div class="stats-grid">
+        <div><span>Cash</span><b id="pauseCash">$0</b></div>
+        <div><span>Wanted</span><b id="pauseWanted">0&#9733;</b></div>
+        <div><span>Jobs done</span><b id="pauseJobs">0</b></div>
+      </div>
+      <button id="resumeBtn" class="cta">RESUME</button>
+      <div class="row-btns">
+        <button id="qualityBtn" class="ghost">QUALITY: HIGH</button>
+        <button id="soundBtn" class="ghost">SOUND: ON</button>
+        <button id="restartBtn" class="ghost danger">RESTART</button>
+      </div>
+      <p class="tiny"><span class="hint-desk">WASD / arrows drive &middot; Space drift &middot; Shift nitro &middot; E get in or out &middot; P pause</span><span class="hint-touch">Touch controls &middot; Gas and brake on the right &middot; Steer on the left &middot; Drift and nitro in the middle</span></p>
+    </div>
+  </div>
+
+  <!-- ================= GAME OVER ================= -->
+  <div id="over" class="screen hidden">
+    <div class="modal panel over-modal">
+      <div id="overKicker" class="eyebrow">WASTED</div>
+      <h2 id="overTitle">BUSTED</h2>
+      <p id="overText">The heat caught up with you.</p>
+      <div class="stats-grid">
+        <div><span>Cash</span><b id="overCash">$0</b></div>
+        <div><span>Jobs done</span><b id="overJobs">0</b></div>
+        <div><span>Best</span><b id="overBest">$0</b></div>
+      </div>
+      <button id="continueBtn" class="cta">BACK TO THE STREETS</button>
+    </div>
+  </div>
+
+  <div id="toasts" aria-live="polite"></div>
+  <div id="loading" class="hidden"><div class="spinner"></div><span>BUILDING THE CITY</span></div>
+</div>
+<script type="module" src="./src/main.js"></script>
+</body>
+</html>
