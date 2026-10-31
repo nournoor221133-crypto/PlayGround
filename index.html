@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no" />
+<meta name="theme-color" content="#07070d" />
+<title>NEON VICE — Open World Police Pursuit</title>
+<link rel="stylesheet" href="./styles.css" />
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚔</text></svg>" />
+</head>
+<body>
+<div id="app">
+  <canvas id="scene" aria-label="3D open world city"></canvas>
+
+  <div id="vignette"></div>
+  <div id="damage-flash"></div>
+
+  <!-- ================= START SCREEN ================= -->
+  <section id="start-screen" class="screen">
+    <div class="start-glow"></div>
+    <div class="start-content">
+      <div class="brand">
+        <div class="brand-kicker"><span class="dot"></span> OMGHIB CITY · NIGHT DISTRICT</div>
+        <h1 class="brand-title">NEON<span>VICE</span></h1>
+        <p class="brand-sub">OPEN WORLD &nbsp;·&nbsp; POLICE PURSUIT</p>
+      </div>
+
+      <p class="start-blurb">The city never sleeps. Neither do the cops.<br/>Steal the night, outrun the heat, and see how long you survive.</p>
+
+      <button id="start-btn" class="cta" type="button">Start</button>
+
+      <div class="controls-grid">
+        <div class="control"><span class="keys"><kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd></span><span>Drive / steer</span></div>
+        <div class="control"><span class="keys"><kbd>SPACE</kbd></span><span>Handbrake drift</span></div>
+        <div class="control"><span class="keys"><kbd>SHIFT</kbd></span><span>Nitro boost</span></div>
+        <div class="control"><span class="keys"><kbd>P</kbd><kbd>M</kbd><kbd>R</kbd></span><span>Pause / mute / restart</span></div>
+      </div>
+
+      <div class="start-foot">
+        <span class="best-label">BEST SCORE</span>
+        <span id="best-score">0</span>
+        <span class="sep">/</span>
+        <span id="sound-hint">Sound on</span>
+      </div>
+    </div>
+
+    <div class="start-side">
+      <div class="badge"><span class="badge-num">5</span><span>WANTED<br/>STARS</span></div>
+      <div class="start-tip">TIP: Slide through intersections with the handbrake to keep your speed and lose the squad cars.</div>
+    </div>
+  </section>
+
+  <!-- ================= HUD ================= -->
+  <div id="hud" class="hidden" aria-live="polite">
+    <div class="hud-top">
+      <div class="wanted-block">
+        <div class="wanted-label">WANTED</div>
+        <div id="stars" class="stars" aria-label="wanted level">
+          <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
+        </div>
+        <div class="heat-track"><div id="heat-fill"></div></div>
+      </div>
+
+      <div class="run-block">
+        <div class="run-label">SURVIVED</div>
+        <div id="timer" class="run-timer">00:00</div>
+        <div class="district" id="district">DOWNTOWN</div>
+      </div>
+
+      <div class="score-block">
+        <div class="run-label">SCORE</div>
+        <div id="score" class="score-value">0</div>
+        <div class="bars">
+          <div class="bar-row"><span class="bar-name">ARMOR</span><div class="bar"><div id="health-fill" class="bar-fill health"></div></div></div>
+          <div class="bar-row"><span class="bar-name">NITRO</span><div class="bar"><div id="nitro-fill" class="bar-fill nitro"></div></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div id="bust-meter" class="bust-meter hidden">
+      <div class="bust-label">BUSTED</div>
+      <div class="bust-track"><div id="bust-fill"></div></div>
+    </div>
+
+    <div id="toast-stack" class="toast-stack"></div>
+
+    <div class="hud-bottom">
+      <div class="map-panel">
+        <div class="map-frame">
+          <canvas id="minimap" width="220" height="220"></canvas>
+          <div class="map-ring"></div>
+          <div class="map-north">N</div>
+        </div>
+        <div class="map-meta"><span id="district-2">NIGHT DISTRICT</span><span id="cop-count">0 UNITS</span></div>
+      </div>
+
+      <div class="speed-panel">
+        <canvas id="speedo" width="240" height="240"></canvas>
+        <div class="speed-readout"><span id="speed-val">0</span><span class="unit">KM/H</span></div>
+        <div id="gear" class="gear">N</div>
+      </div>
+    </div>
+
+    <div class="hint-bar" id="hint-bar">
+      <span class="hint-key">SPACE</span> handbrake &nbsp;·&nbsp; <span class="hint-key">SHIFT</span> nitro &nbsp;·&nbsp; <span class="hint-key">P</span> pause
+    </div>
+
+    <!-- Touch controls -->
+    <div id="touch-controls" class="touch-controls">
+      <div class="touch-left">
+        <button class="tbtn steer" data-touch="left" aria-label="Steer left">◀</button>
+        <button class="tbtn steer" data-touch="right" aria-label="Steer right">▶</button>
+      </div>
+      <div class="touch-right">
+        <button class="tbtn brake" data-touch="brake" aria-label="Brake">BRAKE</button>
+        <button class="tbtn gas" data-touch="gas" aria-label="Accelerate">GAS</button>
+      </div>
+      <button class="tbtn drift" data-touch="drift" aria-label="Handbrake">DRIFT</button>
+      <button class="tbtn nitro" data-touch="nitro" aria-label="Nitro">NITRO</button>
+    </div>
+  </div>
+
+  <!-- ================= PAUSE ================= -->
+  <section id="pause-screen" class="screen hidden">
+    <div class="modal">
+      <div class="modal-kicker">PAUSED</div>
+      <h2>Engine idle.</h2>
+      <p>The city is still waiting.</p>
+      <button id="resume-btn" class="cta small" type="button">Resume</button>
+      <button id="quit-btn" class="ghost" type="button">End run</button>
+    </div>
+  </section>
+
+  <!-- ================= GAME OVER ================= -->
+  <section id="over-screen" class="screen hidden">
+    <div class="modal over-modal">
+      <div id="over-kicker" class="modal-kicker">BUSTED</div>
+      <h2 id="over-title">The night wins.</h2>
+      <div class="stats">
+        <div class="stat"><span>SURVIVED</span><strong id="over-time">00:00</strong></div>
+        <div class="stat"><span>SCORE</span><strong id="over-score">0</strong></div>
+        <div class="stat"><span>TAKEDOWNS</span><strong id="over-takedowns">0</strong></div>
+        <div class="stat"><span>TOP SPEED</span><strong id="over-speed">0 <em>KM/H</em></strong></div>
+      </div>
+      <div id="new-best" class="new-best hidden">NEW PERSONAL BEST</div>
+      <button id="restart-btn" class="cta small" type="button">Run it back</button>
+    </div>
+  </section>
+
+  <div id="rotate-hint" class="rotate-hint hidden">
+    <span>↻</span>
+    <p>Rotate your device for the full city view</p>
+  </div>
+
+  <div id="loading" class="loading">
+    <div class="loading-inner">
+      <div class="loading-mark">NV</div>
+      <div class="loading-bar"><div></div></div>
+      <div class="loading-text">WARMING UP THE STREETS</div>
+    </div>
+  </div>
+</div>
+
+<script type="importmap">
+{
+  "imports": {
+    "three": "./vendor/three.module.js"
+  }
+}
+</script>
+<script type="module" src="./src/main.js"></script>
+</body>
+</html>
